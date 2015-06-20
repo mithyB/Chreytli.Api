@@ -58,6 +58,11 @@ D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\bin\Microsoft.Owin.Security.Googl
 D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\bin\Microsoft.Owin.Security.Twitter.xml
 D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\bin\System.Web.Http.Owin.xml
-D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\obj\Debug\Chreytli.Api.csprojResolveAssemblyReference.cache
 D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\obj\Debug\Chreytli.Api.dll
 D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\obj\Debug\Chreytli.Api.pdb
+D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\bin\System.Web.Cors.dll
+D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\bin\System.Web.Http.Cors.dll
+D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\bin\System.Web.Http.Cors.xml
+D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\obj\Debug\Chreytli.Api.Migrations.init.resources
+D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\obj\Debug\Chreytli.Api.csproj.GenerateResource.Cache
+D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\obj\Debug\Chreytli.Api.csprojResolveAssemblyReference.cache

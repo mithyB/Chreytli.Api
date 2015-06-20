@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -12,6 +13,12 @@ namespace Chreytli.Api.Models
         public int Id { get; set; }
 
         public string AuthorId { get; set; }
+
+        [NotMapped]
+        public ApplicationUser Author { get; set; }
+
+        [NotMapped]
+        public bool IsFavorite { get; set; }
 
         public string Img { get; set; }
 
@@ -26,6 +33,8 @@ namespace Chreytli.Api.Models
 
     public enum SubmissionTypes 
     {
-        Image
+        Image,
+        YouTube,
+        Spotify
     }
 }

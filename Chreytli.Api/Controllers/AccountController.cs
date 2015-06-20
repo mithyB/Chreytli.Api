@@ -16,6 +16,7 @@ using Microsoft.Owin.Security.OAuth;
 using Chreytli.Api.Models;
 using Chreytli.Api.Providers;
 using Chreytli.Api.Results;
+using System.Linq;
 
 namespace Chreytli.Api.Controllers
 {
@@ -57,12 +58,17 @@ namespace Chreytli.Api.Controllers
         public UserInfoViewModel GetUserInfo()
         {
             ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
+            
+            var roles = ((ClaimsIdentity)User.Identity).Claims.Where(x => x.Type == ClaimTypes.Role).ToList();
 
             return new UserInfoViewModel
             {
+                Id = User.Identity.GetUserId(),
+                Username = User.Identity.GetUserName(),
                 Email = User.Identity.GetUserName(),
                 HasRegistered = externalLogin == null,
-                LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
+                LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null,
+                Roles = roles.Select(x => x.Value).ToArray()
             };
         }
 

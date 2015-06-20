@@ -19,7 +19,9 @@ namespace Chreytli.Api.Models
         {
         }
 
-        public System.Data.Entity.DbSet<Chreytli.Api.Models.Submission> Submissions { get; set; }
+        public DbSet<Submission> Submissions { get; set; }
+
+        public DbSet<Favorite> Favorites { get; set; }
     
     }
 }

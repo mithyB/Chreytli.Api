@@ -1,4 +1,6 @@
-﻿using System.Security.Claims;
+﻿using System.Data.Entity;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -27,7 +29,21 @@ namespace Chreytli.Api.Models
         
         public static ApplicationDbContext Create()
         {
-            return new ApplicationDbContext();
+            var context = new ApplicationDbContext();
+
+            var userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(context));
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+
+            var user = new ApplicationUser { Email = "admin@chreytli", UserName = "Admin" };
+
+            userManager.Create(user, "@Dm1n.");
+            roleManager.Create(new IdentityRole("Admins"));
+
+            var admin = userManager.Users.First(x => x.Email == user.Email);
+
+            userManager.AddToRole(admin.Id, "Admins");
+
+            return context;
         }
     }
 }

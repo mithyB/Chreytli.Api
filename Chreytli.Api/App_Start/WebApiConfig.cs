@@ -12,6 +12,8 @@ namespace Chreytli.Api
     {
         public static void Register(HttpConfiguration config)
         {
+            config.EnableCors();
+
             // Web API configuration and services
             // Configure Web API to use only bearer token authentication.
             config.SuppressDefaultHostAuthentication();
@@ -25,6 +27,11 @@ namespace Chreytli.Api
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            config.Formatters
+                .JsonFormatter
+                .SerializerSettings
+                .ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
     }
 }

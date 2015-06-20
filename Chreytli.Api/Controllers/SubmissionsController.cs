@@ -16,10 +16,20 @@ namespace Chreytli.Api.Controllers
     public class SubmissionsController : ApiController
     {
         private ChreytliApiContext db = new ChreytliApiContext();
+        private ApplicationDbContext appDb = new ApplicationDbContext();
 
         // GET: api/Submissions
-        public IQueryable<Submission> GetSubmissions()
+        public IQueryable<Submission> GetSubmissions([FromUri] string userId)
         {
+            db.Submissions.ToList().ForEach(s =>
+            {
+                var author = appDb.Users.SingleOrDefault(x => x.Id == s.AuthorId);
+                if (author != null) s.Author = author;
+
+                var favorites = db.Favorites.SingleOrDefault(x => x.UserId == userId && x.Submission.Id == s.Id);
+                s.IsFavorite = favorites != null;
+            });
+
             return db.Submissions;
         }
 
@@ -89,7 +99,7 @@ namespace Chreytli.Api.Controllers
         }
 
         // DELETE: api/Submissions/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admins")]
         [ResponseType(typeof(Submission))]
         public async Task<IHttpActionResult> DeleteSubmission(int id)
         {
@@ -103,6 +113,49 @@ namespace Chreytli.Api.Controllers
             await db.SaveChangesAsync();
 
             return Ok(submission);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("api/Submissions/{id}/Favorite")]
+        public async Task<IHttpActionResult> Favorite(int id, string userId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var user = appDb.Users.SingleOrDefault(x => x.Id == userId);
+                var favorite = db.Favorites.SingleOrDefault(x => x.UserId == userId && x.Submission.Id == id);
+                var submission = db.Submissions.SingleOrDefault(x => x.Id == id);
+
+                if (user == null || submission == null)
+                {
+                    return BadRequest();
+                }
+
+                if (favorite != null) // unfavorite this submission
+                {
+                    db.Favorites.Remove(favorite);
+                    submission.Score--;
+                }
+                else // favorite this submission
+                {
+                    db.Favorites.Add(new Favorite { Submission = submission, UserId = userId });
+                    submission.Score++;
+                }
+
+                await db.SaveChangesAsync();
+
+                return Ok(submission);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return BadRequest();
+            }
         }
 
         protected override void Dispose(bool disposing)
