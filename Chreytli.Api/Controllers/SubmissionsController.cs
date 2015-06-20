@@ -143,7 +143,11 @@ namespace Chreytli.Api.Controllers
                 }
                 else // favorite this submission
                 {
-                    db.Favorites.Add(new Favorite { Submission = submission, UserId = userId });
+                    favorite = db.Favorites.Create();
+                    favorite.Submission = submission;
+                    favorite.UserId = userId;
+
+                    db.Favorites.Add(favorite);
                     submission.Score++;
                 }
 

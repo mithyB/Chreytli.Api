@@ -9,6 +9,9 @@ namespace Chreytli.Api.Models
         public string UserId { get; set; }
 
         [Key, Column(Order = 1)]
-        public Submission Submission { get; set; }
+        public int SubmissionId { get; set; }
+
+        [ForeignKey("SubmissionId")]
+        public virtual Submission Submission { get; set; }
     }
 }

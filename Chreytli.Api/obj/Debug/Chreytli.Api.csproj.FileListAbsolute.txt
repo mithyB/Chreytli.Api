@@ -66,3 +66,7 @@ D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\bin\System.Web.Http.Cors.xml
 D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\obj\Debug\Chreytli.Api.Migrations.init.resources
 D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\obj\Debug\Chreytli.Api.csproj.GenerateResource.Cache
 D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\obj\Debug\Chreytli.Api.csprojResolveAssemblyReference.cache
+D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\obj\Debug\Chreytli.Api.Migrations.change.resources
+D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\obj\Debug\Chreytli.Api.Migrations.change1.resources
+D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\obj\Debug\Chreytli.Api.Migrations.change2.resources
+D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\obj\Debug\Chreytli.Api.Migrations.change3.resources
