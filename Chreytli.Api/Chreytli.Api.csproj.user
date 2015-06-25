@@ -10,6 +10,7 @@
     <WebStackScaffolding_DbContextTypeFullName>Chreytli.Api.Models.ChreytliApiContext</WebStackScaffolding_DbContextTypeFullName>
     <WebStackScaffolding_IsAsyncSelected>True</WebStackScaffolding_IsAsyncSelected>
     <ProjectView>ProjectFiles</ProjectView>
+    <NameOfLastUsedPublishProfile>Server</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>

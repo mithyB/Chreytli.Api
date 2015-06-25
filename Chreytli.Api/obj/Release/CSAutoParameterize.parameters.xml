@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="DefaultConnection-Web.config Connection String" description="DefaultConnection Connection String used in web.config by the application to access the database." defaultValue="Data Source=(LocalDb)\v11.0;AttachDbFilename=|DataDirectory|\aspnet-Chreytli.Api-20150616072750.mdf;Initial Catalog=aspnet-Chreytli.Api-20150616072750;Integrated Security=True" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\Dev\\Visual\ Studio\\Chreytli\.Api\\Chreytli\.Api\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+  <parameter name="ChreytliApiContext-Web.config Connection String" description="ChreytliApiContext Connection String used in web.config by the application to access the database." defaultValue="Data Source=(localdb)\v11.0; Initial Catalog=ChreytliApiContext-20150616194540; Integrated Security=True; MultipleActiveResultSets=True; AttachDbFilename=|DataDirectory|ChreytliApiContext-20150616194540.mdf" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\Dev\\Visual\ Studio\\Chreytli\.Api\\Chreytli\.Api\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='ChreytliApiContext']/@connectionString" />
+  </parameter>
+  <parameter name="ChreytliApiContext_DatabasePublish-Web.config Connection String" description="ChreytliApiContext_DatabasePublish Connection String used in web.config by the application to access the database." defaultValue="ChreytliApiContext_DatabasePublish.ConnetionString" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\Dev\\Visual\ Studio\\Chreytli\.Api\\Chreytli\.Api\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='ChreytliApiContext_DatabasePublish']/@connectionString" />
+  </parameter>
+</parameters>

@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Chreytli.Api.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace Chreytli.Api.Controllers
 {
@@ -19,18 +22,23 @@ namespace Chreytli.Api.Controllers
         private ApplicationDbContext appDb = new ApplicationDbContext();
 
         // GET: api/Submissions
-        public IQueryable<Submission> GetSubmissions([FromUri] string userId)
+        public IQueryable<Submission> GetSubmissions([FromUri] string userId = null, [FromUri]int page = 0)
         {
+            const int pageSize = 24;
+
             db.Submissions.ToList().ForEach(s =>
             {
-                var author = appDb.Users.SingleOrDefault(x => x.Id == s.AuthorId);
-                if (author != null) s.Author = author;
+                var author = appDb.Users.Find(s.AuthorId);
+                s.Author = new
+                {
+                    author.UserName,
+                    author.Id
+                };
 
-                var favorites = db.Favorites.SingleOrDefault(x => x.UserId == userId && x.Submission.Id == s.Id);
-                s.IsFavorite = favorites != null;
+                s.IsFavorite = db.Favorites.Any(x => x.UserId == userId && x.Submission.Id == s.Id);
             });
 
-            return db.Submissions;
+            return db.Submissions.OrderByDescending(x => x.Date).Skip(pageSize * page).Take(pageSize);
         }
 
         // GET: api/Submissions/5
@@ -99,7 +107,7 @@ namespace Chreytli.Api.Controllers
         }
 
         // DELETE: api/Submissions/5
-        [Authorize(Roles = "Admins")]
+        [Authorize]
         [ResponseType(typeof(Submission))]
         public async Task<IHttpActionResult> DeleteSubmission(int id)
         {
@@ -107,6 +115,12 @@ namespace Chreytli.Api.Controllers
             if (submission == null)
             {
                 return NotFound();
+            }
+
+            if (submission.AuthorId != User.Identity.GetUserId() &&
+                !User.IsInRole("Admins"))
+            {
+                return Unauthorized();
             }
 
             db.Submissions.Remove(submission);
@@ -127,9 +141,9 @@ namespace Chreytli.Api.Controllers
 
             try
             {
-                var user = appDb.Users.SingleOrDefault(x => x.Id == userId);
-                var favorite = db.Favorites.SingleOrDefault(x => x.UserId == userId && x.Submission.Id == id);
-                var submission = db.Submissions.SingleOrDefault(x => x.Id == id);
+                var user = appDb.Users.Find(userId);
+                var favorite = db.Favorites.Find(userId, id);
+                var submission = db.Submissions.Find(id);
 
                 if (user == null || submission == null)
                 {

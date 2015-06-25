@@ -27,6 +27,8 @@ namespace Chreytli.Api.Controllers
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
 
+        private ChreytliApiContext db = new ChreytliApiContext();
+
         public AccountController()
         {
         }
@@ -59,7 +61,10 @@ namespace Chreytli.Api.Controllers
         {
             ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
             
+            var userId = User.Identity.GetUserId();
+            var account = db.Accounts.Find(userId);
             var roles = ((ClaimsIdentity)User.Identity).Claims.Where(x => x.Type == ClaimTypes.Role).ToList();
+            
 
             return new UserInfoViewModel
             {
@@ -68,7 +73,8 @@ namespace Chreytli.Api.Controllers
                 Email = User.Identity.GetUserName(),
                 HasRegistered = externalLogin == null,
                 LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null,
-                Roles = roles.Select(x => x.Value).ToArray()
+                Roles = roles.Select(x => x.Value).ToArray(),
+                Account = account
             };
         }
 
@@ -337,6 +343,10 @@ namespace Chreytli.Api.Controllers
             var user = new ApplicationUser() { UserName = model.Username, Email = model.Email };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+
+            var account = new Account() { CreateDate = DateTime.Now, UserId = user.Id };
+            db.Accounts.Add(account);
+            await db.SaveChangesAsync();
 
             if (!result.Succeeded)
             {

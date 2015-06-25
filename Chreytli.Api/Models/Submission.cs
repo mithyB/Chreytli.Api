@@ -15,7 +15,7 @@ namespace Chreytli.Api.Models
         public string AuthorId { get; set; }
 
         [NotMapped]
-        public ApplicationUser Author { get; set; }
+        public object Author { get; set; }
 
         [NotMapped]
         public bool IsFavorite { get; set; }

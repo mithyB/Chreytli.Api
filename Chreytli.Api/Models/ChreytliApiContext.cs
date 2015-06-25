@@ -22,6 +22,7 @@ namespace Chreytli.Api.Models
         public DbSet<Submission> Submissions { get; set; }
 
         public DbSet<Favorite> Favorites { get; set; }
-    
+
+        public DbSet<Account> Accounts { get; set; }    
     }
 }
