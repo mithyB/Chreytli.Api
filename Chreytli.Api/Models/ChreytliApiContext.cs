@@ -23,6 +23,21 @@ namespace Chreytli.Api.Models
 
         public DbSet<Favorite> Favorites { get; set; }
 
-        public DbSet<Account> Accounts { get; set; }    
+        public DbSet<Account> Accounts { get; set; }
+
+        public DbSet<Poll> Polls { get; set; }
+
+        public DbSet<Vote> Votes { get; set; }
+
+        public DbSet<Choice> Choices { get; set; }
+
+        public DbSet<VoteChoice> VoteChoices { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Poll>()
+                .HasMany(x => x.Choices)
+                .WithRequired(x => x.Poll);
+        }
     }
 }

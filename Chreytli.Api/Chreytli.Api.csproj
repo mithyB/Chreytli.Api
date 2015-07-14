@@ -242,6 +242,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MetaController.cs" />
+    <Compile Include="Controllers\PollsController.cs" />
     <Compile Include="Controllers\SubmissionsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -270,14 +271,22 @@
     <Compile Include="Migrations\201506231925079_account.Designer.cs">
       <DependentUpon>201506231925079_account.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507141540268_Poll.cs" />
+    <Compile Include="Migrations\201507141540268_Poll.Designer.cs">
+      <DependentUpon>201507141540268_Poll.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Choice.cs" />
     <Compile Include="Models\ChreytliApiContext.cs" />
     <Compile Include="Models\Favorite.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Poll.cs" />
     <Compile Include="Models\Submission.cs" />
+    <Compile Include="Models\Vote.cs" />
+    <Compile Include="Models\VoteChoice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
@@ -381,6 +390,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201506231925079_account.resx">
       <DependentUpon>201506231925079_account.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507141540268_Poll.resx">
+      <DependentUpon>201507141540268_Poll.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
