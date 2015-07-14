@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Chreytli.Api.Models;
-using MoreLinq;
 
 namespace Chreytli.Api.Controllers
 {
@@ -23,7 +22,7 @@ namespace Chreytli.Api.Controllers
         public IQueryable<Poll> GetPolls([FromUri]string userId = null, [FromUri]int page = 0, [FromUri]int pageSize = 12)
         {
             var polls = db.Polls.Include(x => x.Choices).OrderByDescending(x => x.Date);
-            polls.ForEachAsync(x =>
+            polls.ToList().ForEach(x =>
             {
                 var user = appDb.Users.Find(x.AuthorId);
                 if (user != null)
@@ -34,7 +33,7 @@ namespace Chreytli.Api.Controllers
                     };
                 }
 
-                x.IsVoted = db.Votes.Any(y => y.UserId == userId && y.PollId == y.Id);
+                x.IsVoted = db.Votes.Any(y => y.UserId == userId && y.PollId == x.Id);
             });
 
             return polls.Skip(pageSize * page).Take(pageSize);
@@ -134,7 +133,7 @@ namespace Chreytli.Api.Controllers
                 var isVoted = db.Votes.Any(y => y.UserId == userId && y.PollId == id);
 
                 var voteChoices = new List<VoteChoice>();
-                choiceIds.ForEach(x => voteChoices.Add(new VoteChoice { ChoiceId = x }));
+                choiceIds.ToList().ForEach(x => voteChoices.Add(new VoteChoice { ChoiceId = x }));
 
                 //var voteChoices = db.Choices.Where(x => choiceIds.Contains(x.Id)).ToArray();
                 var poll = db.Polls.Find(id);

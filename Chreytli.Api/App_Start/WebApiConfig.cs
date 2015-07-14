@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace Chreytli.Api
 {
@@ -32,6 +33,11 @@ namespace Chreytli.Api
                 .JsonFormatter
                 .SerializerSettings
                 .ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+            config.Formatters
+                .JsonFormatter
+                .SerializerSettings
+                .ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
         }
     }
 }
