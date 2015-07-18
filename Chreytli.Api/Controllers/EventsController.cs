@@ -37,6 +37,7 @@ namespace Chreytli.Api.Controllers
         }
 
         // PUT: api/Events/5
+        [Authorize]
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutEvent(Guid id, Event @event)
         {
@@ -72,6 +73,7 @@ namespace Chreytli.Api.Controllers
         }
 
         // POST: api/Events
+        [Authorize]
         [ResponseType(typeof(Event))]
         public async Task<IHttpActionResult> PostEvent(Event @event)
         {
@@ -104,6 +106,7 @@ namespace Chreytli.Api.Controllers
         }
 
         // DELETE: api/Events/5
+        [Authorize]
         [ResponseType(typeof(Event))]
         public async Task<IHttpActionResult> DeleteEvent(Guid id)
         {
