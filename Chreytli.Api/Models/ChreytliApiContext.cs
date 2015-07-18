@@ -33,6 +33,8 @@ namespace Chreytli.Api.Models
 
         public DbSet<VoteChoice> VoteChoices { get; set; }
 
+        public DbSet<Event> Events { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Poll>()

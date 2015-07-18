@@ -240,6 +240,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MetaController.cs" />
     <Compile Include="Controllers\PollsController.cs" />
@@ -275,12 +276,17 @@
     <Compile Include="Migrations\201507141540268_Poll.Designer.cs">
       <DependentUpon>201507141540268_Poll.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507180702066_events.cs" />
+    <Compile Include="Migrations\201507180702066_events.Designer.cs">
+      <DependentUpon>201507180702066_events.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Choice.cs" />
     <Compile Include="Models\ChreytliApiContext.cs" />
+    <Compile Include="Models\Event.cs" />
     <Compile Include="Models\Favorite.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Poll.cs" />
@@ -393,6 +399,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507141540268_Poll.resx">
       <DependentUpon>201507141540268_Poll.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507180702066_events.resx">
+      <DependentUpon>201507180702066_events.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

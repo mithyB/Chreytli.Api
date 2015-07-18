@@ -108,3 +108,4 @@ D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\bin\ru\System.Spatial.resources.d
 D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\bin\zh-Hans\System.Spatial.resources.dll
 D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\bin\zh-Hant\System.Spatial.resources.dll
 D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\obj\Release\Chreytli.Api.Migrations.account.resources
+D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\obj\Release\Chreytli.Api.Migrations.Poll.resources
