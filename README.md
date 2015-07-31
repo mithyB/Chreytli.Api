@@ -13,7 +13,6 @@ Authorization: Bearer <access_token | string>
 
 ## Account
 ### Login
-URL
 ```
 POST /token
 ```
@@ -26,7 +25,6 @@ Body
 }
 ```
 ### Register
-URL
 ```
 POST /api/Account/Register
 ```
@@ -42,13 +40,11 @@ Body
 ## Events
 ### GET
 Returns a list of events.
-URL
 ```
 GET /api/Events
 ```
 ### POST*
 Add a new event. Returns the newly created event.
-URL
 ```
 POST /api/Events
 ```
@@ -64,7 +60,6 @@ Body
 ```
 ### PUT*
 Edit a existing event. Returns the edited event.
-URL
 ```
 PUT /api/Events
 ```
@@ -81,7 +76,6 @@ Body
 ```
 ### DELETE*
 Delete an event by its ID. Returns the deleted event.
-URL
 ```
 DELETE /api/Events
 ```
