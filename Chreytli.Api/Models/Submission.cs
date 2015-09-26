@@ -28,13 +28,16 @@ namespace Chreytli.Api.Models
 
         public int Score { get; set; }
 
+        public bool IsHosted { get; set; }
+
         public SubmissionTypes Type { get; set; }
     }
 
     public enum SubmissionTypes 
     {
-        Image,
-        YouTube,
-        Spotify
+        Image = 0,
+        YouTube = 1,
+        Spotify = 2,
+        Video = 3
     }
 }

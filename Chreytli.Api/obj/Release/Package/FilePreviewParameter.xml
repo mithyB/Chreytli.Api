@@ -4,10 +4,10 @@
     <parameterEntry kind="ProviderPath" scope="IisApp" match="^D:\\Dev\\Visual\ Studio\\Chreytli\.Api\\Chreytli\.Api\\obj\\Release\\Package\\PackageTmp$" />
     <parameterEntry kind="ProviderPath" scope="setAcl" match="^D:\\Dev\\Visual\ Studio\\Chreytli\.Api\\Chreytli\.Api\\obj\\Release\\Package\\PackageTmp$" />
   </parameter>
-  <parameter name="ChreytliApiContext-Web.config Connection String" description="" value="Data Source=.\SQLSERVER;Initial Catalog=ChreytliApiDb;Persist Security Info=True;User ID=sa;Password=@Dm1n.1337" tags="">
+  <parameter name="ChreytliApiContext-Web.config Connection String" description="" value="Data Source=.\SQLEXPRESS;Initial Catalog=ChreytliApiDb;Persist Security Info=True;User ID=ChreytliMaster;Password=Beschte!CG" tags="">
     <parameterEntry kind="XmlFile" scope="D:\\Dev\\Visual\ Studio\\Chreytli\.Api\\Chreytli\.Api\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='ChreytliApiContext']/@connectionString" />
   </parameter>
-  <parameter name="DefaultConnection-Web.config Connection String" description="" value="Data Source=.\SQLSERVER;Initial Catalog=ApplicationDb;Persist Security Info=True;User ID=sa;Password=@Dm1n.1337" tags="">
+  <parameter name="DefaultConnection-Web.config Connection String" description="" value="Data Source=.\SQLEXPRESS;Initial Catalog=ApplicationDb;Persist Security Info=True;User ID=ChreytliMaster;Password=Beschte!CG" tags="">
     <parameterEntry kind="XmlFile" scope="D:\\Dev\\Visual\ Studio\\Chreytli\.Api\\Chreytli\.Api\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
   </parameter>
 </parameters>

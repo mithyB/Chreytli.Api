@@ -13,6 +13,7 @@ using Chreytli.Api.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
+using Chreytli.Api.BusinessControllers;
 
 namespace Chreytli.Api.Controllers
 {
@@ -20,6 +21,8 @@ namespace Chreytli.Api.Controllers
     {
         private ChreytliApiContext db = new ChreytliApiContext();
         private ApplicationDbContext appDb = new ApplicationDbContext();
+
+        private SubmissionsBusinessController _controller = new SubmissionsBusinessController();
 
         // GET: api/Submissions
         public IQueryable<Submission> GetSubmissions([FromUri] string userId = null, [FromUri]int page = 0)
@@ -99,6 +102,22 @@ namespace Chreytli.Api.Controllers
             {
                 return BadRequest(ModelState);
             }
+            
+            string contentType = "";
+            var request = HttpWebRequest.Create(submission.Url) as HttpWebRequest;
+            if (request != null)
+            {
+                var response = request.GetResponse() as HttpWebResponse;
+
+                if (response != null)
+                    contentType = response.ContentType;
+            }
+
+            if (contentType.Contains("video")) {
+                submission.Type = SubmissionTypes.Video;
+            }
+
+            _controller.GetThumbnail(ref submission, contentType);
 
             db.Submissions.Add(submission);
             await db.SaveChangesAsync();

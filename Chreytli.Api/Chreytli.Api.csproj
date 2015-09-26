@@ -115,6 +115,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NReco.VideoConverter">
+      <HintPath>..\packages\NReco.VideoConverter.1.0.8.0\lib\net20\NReco.VideoConverter.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -239,6 +242,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="BusinessControllers\SubmissionsBusinessController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -280,6 +284,10 @@
     <Compile Include="Migrations\201507180702066_events.Designer.cs">
       <DependentUpon>201507180702066_events.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201509261129048_submissions.cs" />
+    <Compile Include="Migrations\201509261129048_submissions.Designer.cs">
+      <DependentUpon>201509261129048_submissions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -289,6 +297,7 @@
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\Favorite.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\IdentityModelsAdminSeed_DoNotCommitThisFile.cs" />
     <Compile Include="Models\Poll.cs" />
     <Compile Include="Models\Submission.cs" />
     <Compile Include="Models\Vote.cs" />
@@ -332,6 +341,7 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <None Include="Properties\PublishProfiles\Chreytli.pubxml" />
     <None Include="Properties\PublishProfiles\Server.pubxml">
       <SubType>Designer</SubType>
     </None>
@@ -402,6 +412,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507180702066_events.resx">
       <DependentUpon>201507180702066_events.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509261129048_submissions.resx">
+      <DependentUpon>201509261129048_submissions.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
