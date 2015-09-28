@@ -16,42 +16,10 @@ namespace Chreytli.Api.BusinessControllers
         {
             if (submission.Type == SubmissionTypes.Image || submission.Type == SubmissionTypes.Video)
             {
-                //var request = WebRequest.Create(url) as HttpWebRequest;
-                //if (request != null)
-                //{
-                //    var response = request.GetResponse() as HttpWebResponse;
-
-                //    if (response != null)
-                //        submission.MimeType = response.ContentType;
-                //}
-
                 var mime = mimeType.Split('/');
-
-                //if (mime[0] == "audio" || mime[0] == "video")
-                //{
-                //    submission.Type = SubmissionTypes.Video;
-                //}
-                //else
-                //{
-                //    SubmissionTypes type;
-                //    if (Enum.TryParse(mime[0], true, out type))
-                //        submission.Type = type;
-                //}
-
-                //var regex = new Regex(@"data:image\/(.*);base64,(.*)");
-                //var match = regex.Match(submission.Img);
 
                 var fileName = "images/posts/" + submission.AuthorId + "-" + submission.Date.ToBinary() + "." + mime[1];
                 var imgName = "images/posts/" + submission.AuthorId + "-" + submission.Date.ToBinary() + ".jpg";
-
-                //if (match.Success)
-                //{
-                //    var blob = Convert.FromBase64String(match.Groups[2].Value);
-                //    File.WriteAllBytes(fileNameOnServer, blob);
-                //    submission.Img = fileName;
-                //}
-                //else
-                //{
 
                 // Create folders if they don't exist already
                 if (!Directory.Exists(GetServerPath("images")))
@@ -68,7 +36,6 @@ namespace Chreytli.Api.BusinessControllers
                     using (var webClient = new WebClient())
                     {
                         webClient.DownloadFile(submission.Url, GetServerPath(fileName));
-                        //webClient.DownloadFile(submission.Img, GetServerPath(imgName));
                         submission.Url = fileName;
                     }
                 }
@@ -101,7 +68,18 @@ namespace Chreytli.Api.BusinessControllers
                 {
                     Console.WriteLine(ex.GetBaseException());
                 }
-                //}
+            }
+        }
+
+        public void RemoveImages(Submission submission)
+        {
+            if (File.Exists(GetServerPath(submission.Img)))
+            {
+                File.Delete(GetServerPath(submission.Img));
+            }
+            if (File.Exists(GetServerPath(submission.Url)))
+            {
+                File.Delete(GetServerPath(submission.Url));
             }
         }
 

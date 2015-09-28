@@ -117,6 +117,12 @@ namespace Chreytli.Api.Controllers
                 submission.Type = SubmissionTypes.Video;
             }
 
+            if (submission.Type == SubmissionTypes.Spotify ||
+                submission.Type == SubmissionTypes.YouTube)
+            {
+                submission.IsHosted = false;
+            }
+
             _controller.GetThumbnail(ref submission, contentType);
 
             db.Submissions.Add(submission);
@@ -141,6 +147,8 @@ namespace Chreytli.Api.Controllers
             {
                 return Unauthorized();
             }
+
+            _controller.RemoveImages(submission);
 
             db.Submissions.Remove(submission);
             await db.SaveChangesAsync();

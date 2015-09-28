@@ -6,10 +6,10 @@ using System.Web;
 
 namespace Chreytli.Api.Models
 {
-    public class Event
+    public class Event : AuthorEntity
     {
         [Key]
-        public Guid Id { get; set; }
+        new public Guid Id { get; set; }
 
         public string Title { get; set; }
 

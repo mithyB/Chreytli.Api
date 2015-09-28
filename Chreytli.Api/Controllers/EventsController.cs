@@ -16,10 +16,28 @@ namespace Chreytli.Api.Controllers
     public class EventsController : ApiController
     {
         private ChreytliApiContext db = new ChreytliApiContext();
+        private ApplicationDbContext appDb = new ApplicationDbContext();
 
         // GET: api/Events
         public IQueryable<Event> GetEvents()
         {
+            db.Events.ToList().ForEach(s =>
+            {
+                if (s.AuthorId != null)
+                {
+                    var author = appDb.Users.Find(s.AuthorId);
+                    s.Author = new
+                    {
+                        author.UserName,
+                        author.Id
+                    };
+                }
+                else
+                {
+                    s.Author = new { UserName = "unknown" };
+                }
+            });
+
             return db.Events;
         }
 

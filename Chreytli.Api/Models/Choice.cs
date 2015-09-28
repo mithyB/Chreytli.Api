@@ -7,11 +7,8 @@ using System.Web;
 
 namespace Chreytli.Api.Models
 {
-    public class Choice
+    public class Choice : Entity
     {
-        [Key]
-        public int Id { get; set; }
-
         public string Text { get; set; }
 
         public int Votes { get; set; }

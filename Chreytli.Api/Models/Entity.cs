@@ -6,12 +6,9 @@ using System.Web;
 
 namespace Chreytli.Api.Models
 {
-    public class Vote : Entity
+    public class Entity
     {
-        public string UserId { get; set; }
-
-        public int PollId { get; set; }
-
-        public List<VoteChoice> VoteChoices { get; set; }
+        [Key]
+        public int Id { get; set; }
     }
 }

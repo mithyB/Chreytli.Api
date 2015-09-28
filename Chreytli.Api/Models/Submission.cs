@@ -7,24 +7,14 @@ using System.Web;
 
 namespace Chreytli.Api.Models
 {
-    public class Submission
+    public class Submission : AuthorEntity
     {
-        [Key]
-        public int Id { get; set; }
-
-        public string AuthorId { get; set; }
-
-        [NotMapped]
-        public object Author { get; set; }
-
         [NotMapped]
         public bool IsFavorite { get; set; }
 
         public string Img { get; set; }
 
         public string Url { get; set; }
-
-        public DateTime Date { get; set; }
 
         public int Score { get; set; }
 
