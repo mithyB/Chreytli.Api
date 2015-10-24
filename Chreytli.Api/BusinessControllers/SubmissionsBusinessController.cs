@@ -7,6 +7,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Hosting;
+using System.Data.Entity;
 
 namespace Chreytli.Api.BusinessControllers
 {
@@ -71,13 +72,23 @@ namespace Chreytli.Api.BusinessControllers
             }
         }
 
+        internal IQueryable<Submission> GetFilteredSubmissions(DbSet<Submission> submissions, string[] filter)
+        {
+            if (filter == null || filter.Length == 0)
+            {
+                filter = new [] { "sfw" };
+            }
+
+            return submissions.Where(x => filter.Any(f => f.ToLower() == x.Tag.ToString().ToLower()));
+        }
+
         public void RemoveImages(Submission submission)
         {
-            if (File.Exists(GetServerPath(submission.Img)))
+            if (!submission.Img.StartsWith("http") && File.Exists(GetServerPath(submission.Img)))
             {
                 File.Delete(GetServerPath(submission.Img));
             }
-            if (File.Exists(GetServerPath(submission.Url)))
+            if (!submission.Url.StartsWith("http") && File.Exists(GetServerPath(submission.Url)))
             {
                 File.Delete(GetServerPath(submission.Url));
             }

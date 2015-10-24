@@ -21,6 +21,8 @@ namespace Chreytli.Api.Models
         public bool IsHosted { get; set; }
 
         public SubmissionTypes Type { get; set; }
+
+        public TagType Tag { get; set; }
     }
 
     public enum SubmissionTypes 
@@ -29,5 +31,12 @@ namespace Chreytli.Api.Models
         YouTube = 1,
         Spotify = 2,
         Video = 3
+    }
+
+    public enum TagType
+    {
+        Sfw = 0,  // Safe for work
+        Nsfw = 1, // Not safe for work
+        Nsfl = 2  // Not safe for life
     }
 }

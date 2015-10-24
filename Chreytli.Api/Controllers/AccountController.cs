@@ -331,13 +331,17 @@ namespace Chreytli.Api.Controllers
         }
 
         // POST api/Account/Register
-        [AllowAnonymous]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+
+            if (!User.IsInRole("Admins"))
+            {
+                return Unauthorized();
             }
 
             var user = new ApplicationUser() { UserName = model.Username, Email = model.Email };

@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -292,6 +293,10 @@
     <Compile Include="Migrations\201509281952025_entities.Designer.cs">
       <DependentUpon>201509281952025_entities.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510241143258_tag.cs" />
+    <Compile Include="Migrations\201510241143258_tag.Designer.cs">
+      <DependentUpon>201510241143258_tag.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -424,6 +429,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201509281952025_entities.resx">
       <DependentUpon>201509281952025_entities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510241143258_tag.resx">
+      <DependentUpon>201510241143258_tag.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

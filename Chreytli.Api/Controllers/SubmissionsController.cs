@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Chreytli.Api.Models;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
 using Chreytli.Api.BusinessControllers;
 
 namespace Chreytli.Api.Controllers
@@ -25,7 +21,7 @@ namespace Chreytli.Api.Controllers
         private SubmissionsBusinessController _controller = new SubmissionsBusinessController();
 
         // GET: api/Submissions
-        public IQueryable<Submission> GetSubmissions([FromUri] string userId = null, [FromUri]int page = 0)
+        public IQueryable<Submission> GetSubmissions([FromUri] string userId = null, [FromUri]int page = 0, [FromUri]string[] filter = null)
         {
             const int pageSize = 24;
 
@@ -41,7 +37,7 @@ namespace Chreytli.Api.Controllers
                 s.IsFavorite = db.Favorites.Any(x => x.UserId == userId && x.Submission.Id == s.Id);
             });
 
-            return db.Submissions.OrderByDescending(x => x.Date).Skip(pageSize * page).Take(pageSize);
+            return _controller.GetFilteredSubmissions(db.Submissions, filter).OrderByDescending(x => x.Date).Skip(pageSize * page).Take(pageSize);
         }
 
         // GET: api/Submissions/5
