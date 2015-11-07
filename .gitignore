@@ -1,3 +1,9 @@
 /packages
+
 Chreytli.Api/App_Data/*.mdf
 Chreytli.Api/App_Data/*.ldf
+
+Chreytli.Api/bin
+Chreytli.Api/obj
+
+*.suo
