@@ -6,5 +6,8 @@ Chreytli.Api/App_Data/*.ldf
 Chreytli.Api/bin/
 Chreytli.Api/obj/
 
+Chreytli.Api/images/
+Chreytli.Api/Properties/PublishProfiles
+
 *.suo
 .vs
