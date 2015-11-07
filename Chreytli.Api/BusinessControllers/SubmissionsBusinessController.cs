@@ -1,26 +1,43 @@
 ﻿using Chreytli.Api.Models;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text.RegularExpressions;
-using System.Web;
 using System.Web.Hosting;
 using System.Data.Entity;
+using System.Collections.Generic;
 
 namespace Chreytli.Api.BusinessControllers
 {
     public class SubmissionsBusinessController
     {
+        public IQueryable<Submission> GetSubmissions(IEnumerable<Submission> submissions, IDbSet<Favorite> favorites, IDbSet<ApplicationUser> users, string userId, string[] filter, int pageSize, int page)
+        {
+            var subs = submissions.Select(x =>
+            {
+                //var author = users.Find(x.Author.Id);
+                //x.Author = new
+                //{
+                //    author.UserName,
+                //    author.Id
+                //};
+
+                x.IsFavorite = favorites.Any(f => f.User.Id == userId && f.Submission.Id == x.Id);
+
+                return x;
+            }).AsQueryable();
+
+            return GetFilteredSubmissions(subs, filter).OrderByDescending(x => x.Date).Skip(pageSize * page).Take(pageSize);
+        }
+
         public void GetThumbnail(ref Submission submission, string mimeType)
         {
             if (submission.Type == SubmissionTypes.Image || submission.Type == SubmissionTypes.Video)
             {
                 var mime = mimeType.Split('/');
 
-                var fileName = "images/posts/" + submission.AuthorId + "-" + submission.Date.ToBinary() + "." + mime[1];
-                var imgName = "images/posts/" + submission.AuthorId + "-" + submission.Date.ToBinary() + ".jpg";
+                var fileName = "images/posts/" + submission.Author.Id + "-" + submission.Date.ToBinary() + "." + mime[1];
+                var imgName = "images/posts/" + submission.Author.Id + "-" + submission.Date.ToBinary() + ".jpg";
 
                 // Create folders if they don't exist already
                 if (!Directory.Exists(GetServerPath("images")))
@@ -72,7 +89,7 @@ namespace Chreytli.Api.BusinessControllers
             }
         }
 
-        internal IQueryable<Submission> GetFilteredSubmissions(DbSet<Submission> submissions, string[] filter)
+        internal IQueryable<Submission> GetFilteredSubmissions(IQueryable<Submission> submissions, string[] filter)
         {
             if (filter == null || filter.Length == 0)
             {

@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace Chreytli.Api.Models
 {
     public class Event : AuthorEntity
     {
-        [Key]
         new public Guid Id { get; set; }
 
         public string Title { get; set; }

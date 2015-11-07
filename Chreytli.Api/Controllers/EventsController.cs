@@ -1,44 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Chreytli.Api.Models;
+using Chreytli.Api.BusinessControllers;
 
 namespace Chreytli.Api.Controllers
 {
     public class EventsController : ApiController
     {
-        private ChreytliApiContext db = new ChreytliApiContext();
-        private ApplicationDbContext appDb = new ApplicationDbContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
+
+        private EventsBusinessController controller = new EventsBusinessController();
 
         // GET: api/Events
         public IQueryable<Event> GetEvents()
         {
-            db.Events.ToList().ForEach(s =>
-            {
-                if (s.AuthorId != null)
-                {
-                    var author = appDb.Users.Find(s.AuthorId);
-                    s.Author = new
-                    {
-                        author.UserName,
-                        author.Id
-                    };
-                }
-                else
-                {
-                    s.Author = new { UserName = "unknown" };
-                }
-            });
-
-            return db.Events;
+            return controller.GetEvents(db.Events, db.Users);
         }
 
         // GET: api/Events/5

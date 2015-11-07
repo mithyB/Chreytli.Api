@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace Chreytli.Api.Models
 {
     public class Vote : Entity
     {
-        public string UserId { get; set; }
+        public virtual ApplicationUser User { get; set; }
 
-        public int PollId { get; set; }
+        public virtual Poll Poll { get; set; }
 
-        public List<VoteChoice> VoteChoices { get; set; }
+        public virtual ICollection<VoteChoice> VoteChoices { get; set; }
     }
 }

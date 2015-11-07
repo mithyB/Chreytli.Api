@@ -39,7 +39,7 @@ namespace Chreytli.Api.Models
 
         public string[] Roles { get; set; }
 
-        public Account Account { get; set; }
+        public DateTime CreateDate { get; set; }
     }
 
     public class UserLoginInfoViewModel

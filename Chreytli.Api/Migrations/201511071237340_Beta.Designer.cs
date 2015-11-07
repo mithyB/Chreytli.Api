@@ -6,14 +6,14 @@ namespace Chreytli.Api.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    [GeneratedCode("EntityFramework.Migrations", "6.1.1-30610")]
-    public sealed partial class change2 : IMigrationMetadata
+    [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
+    public sealed partial class Beta : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(change2));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Beta));
         
         string IMigrationMetadata.Id
         {
-            get { return "201506201243077_change2"; }
+            get { return "201511071237340_Beta"; }
         }
         
         string IMigrationMetadata.Source

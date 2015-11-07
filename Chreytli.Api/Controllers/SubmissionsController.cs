@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
@@ -15,29 +14,16 @@ namespace Chreytli.Api.Controllers
 {
     public class SubmissionsController : ApiController
     {
-        private ChreytliApiContext db = new ChreytliApiContext();
-        private ApplicationDbContext appDb = new ApplicationDbContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
-        private SubmissionsBusinessController _controller = new SubmissionsBusinessController();
+        private SubmissionsBusinessController controller = new SubmissionsBusinessController();
 
         // GET: api/Submissions
         public IQueryable<Submission> GetSubmissions([FromUri] string userId = null, [FromUri]int page = 0, [FromUri]string[] filter = null)
         {
             const int pageSize = 24;
 
-            db.Submissions.ToList().ForEach(s =>
-            {
-                var author = appDb.Users.Find(s.AuthorId);
-                s.Author = new
-                {
-                    author.UserName,
-                    author.Id
-                };
-
-                s.IsFavorite = db.Favorites.Any(x => x.UserId == userId && x.Submission.Id == s.Id);
-            });
-
-            return _controller.GetFilteredSubmissions(db.Submissions, filter).OrderByDescending(x => x.Date).Skip(pageSize * page).Take(pageSize);
+            return controller.GetSubmissions(db.Submissions, db.Favorites, db.Users, userId, filter, pageSize, page);
         }
 
         // GET: api/Submissions/5
@@ -119,7 +105,8 @@ namespace Chreytli.Api.Controllers
                 submission.IsHosted = false;
             }
 
-            _controller.GetThumbnail(ref submission, contentType);
+            controller.GetThumbnail(ref submission, contentType);
+            submission.Author = db.Users.Find(submission.Author.Id);
 
             db.Submissions.Add(submission);
             await db.SaveChangesAsync();
@@ -138,13 +125,13 @@ namespace Chreytli.Api.Controllers
                 return NotFound();
             }
 
-            if (submission.AuthorId != User.Identity.GetUserId() &&
+            if (submission.Author.Id != User.Identity.GetUserId() &&
                 !User.IsInRole("Admins"))
             {
                 return Unauthorized();
             }
 
-            _controller.RemoveImages(submission);
+            controller.RemoveImages(submission);
 
             db.Submissions.Remove(submission);
             await db.SaveChangesAsync();
@@ -164,7 +151,7 @@ namespace Chreytli.Api.Controllers
 
             try
             {
-                var user = appDb.Users.Find(userId);
+                var user = db.Users.Find(userId);
                 var favorite = db.Favorites.Find(userId, id);
                 var submission = db.Submissions.Find(id);
 
@@ -182,7 +169,7 @@ namespace Chreytli.Api.Controllers
                 {
                     favorite = db.Favorites.Create();
                     favorite.Submission = submission;
-                    favorite.UserId = userId;
+                    favorite.User = db.Users.Find(userId);
 
                     db.Favorites.Add(favorite);
                     submission.Score++;

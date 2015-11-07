@@ -5,38 +5,24 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Chreytli.Api.Models;
+using Chreytli.Api.BusinessControllers;
 
 namespace Chreytli.Api.Controllers
 {
     public class PollsController : ApiController
     {
-        private ChreytliApiContext db = new ChreytliApiContext();
-        private ApplicationDbContext appDb = new ApplicationDbContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
+
+        private PollsBusinessController controller = new PollsBusinessController();
 
         // GET: api/Polls
         public IQueryable<Poll> GetPolls([FromUri]string userId = null, [FromUri]int page = 0, [FromUri]int pageSize = 12)
         {
-            var polls = db.Polls.Include(x => x.Choices).OrderByDescending(x => x.Date);
-            polls.ToList().ForEach(x =>
-            {
-                var user = appDb.Users.Find(x.AuthorId);
-                if (user != null)
-                {
-                    x.Author = new
-                    {
-                        Username = user.UserName
-                    };
-                }
-
-                x.IsVoted = db.Votes.Any(y => y.UserId == userId && y.PollId == x.Id);
-            });
-
-            return polls.Skip(pageSize * page).Take(pageSize);
+            return controller.GetPolls(db.Polls, db.Votes, db.Users, userId, pageSize, page);
         }
 
         // GET: api/Polls/5
@@ -96,6 +82,7 @@ namespace Chreytli.Api.Controllers
                 return BadRequest(ModelState);
             }
 
+            poll.Author = db.Users.Find(poll.Author.Id);
             db.Polls.Add(poll);
             await db.SaveChangesAsync();
 
@@ -130,10 +117,10 @@ namespace Chreytli.Api.Controllers
 
             try
             {
-                var isVoted = db.Votes.Any(y => y.UserId == userId && y.PollId == id);
+                var isVoted = db.Votes.Any(y => y.User.Id == userId && y.Poll.Id == id);
 
                 var voteChoices = new List<VoteChoice>();
-                choiceIds.ToList().ForEach(x => voteChoices.Add(new VoteChoice { ChoiceId = x }));
+                choiceIds.ToList().ForEach(x => voteChoices.Add(new VoteChoice { Choice = db.Choices.Find(x) }));
 
                 //var voteChoices = db.Choices.Where(x => choiceIds.Contains(x.Id)).ToArray();
                 var poll = db.Polls.Find(id);
@@ -148,12 +135,12 @@ namespace Chreytli.Api.Controllers
                     return BadRequest();
                 }
 
-                db.Votes.Add(new Vote { VoteChoices = voteChoices, UserId = userId, PollId = id });
+                db.Votes.Add(new Vote { VoteChoices = voteChoices, User = db.Users.Find(userId), Poll = db.Polls.Find(id) });
                 db.Entry(poll).Collection(x => x.Choices).Load();
 
                 await db.SaveChangesAsync();
 
-                poll.Choices.ForEach(x => x.Votes = db.Votes.Count(y => y.VoteChoices.Any(z => z.ChoiceId == x.Id)));
+                poll.Choices.ToList().ForEach(x => x.Votes = db.Votes.Count(y => y.VoteChoices.Any(z => z.ChoiceId == x.Id)));
                 poll.TotalVotes = poll.Choices.Sum(x => x.Votes);
 
                 await db.SaveChangesAsync();
@@ -162,7 +149,7 @@ namespace Chreytli.Api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.GetBaseException().Message);
             }
         }
 

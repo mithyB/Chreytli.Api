@@ -6,7 +6,6 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using System.Web.Http.ModelBinding;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -27,7 +26,7 @@ namespace Chreytli.Api.Controllers
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
 
-        private ChreytliApiContext db = new ChreytliApiContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         public AccountController()
         {
@@ -62,19 +61,19 @@ namespace Chreytli.Api.Controllers
             ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
             
             var userId = User.Identity.GetUserId();
-            var account = db.Accounts.Find(userId);
+            var user = db.Users.Find(userId);
             var roles = ((ClaimsIdentity)User.Identity).Claims.Where(x => x.Type == ClaimTypes.Role).ToList();
-            
+
 
             return new UserInfoViewModel
             {
-                Id = User.Identity.GetUserId(),
-                Username = User.Identity.GetUserName(),
-                Email = User.Identity.GetUserName(),
+                Id = userId,
+                Username = user.UserName,
+                Email = user.Email,
                 HasRegistered = externalLogin == null,
                 LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null,
                 Roles = roles.Select(x => x.Value).ToArray(),
-                Account = account
+                CreateDate = user.CreateDate
             };
         }
 
@@ -344,12 +343,10 @@ namespace Chreytli.Api.Controllers
                 return Unauthorized();
             }
 
-            var user = new ApplicationUser() { UserName = model.Username, Email = model.Email };
+            var user = new ApplicationUser() { UserName = model.Username, Email = model.Email, CreateDate = DateTime.Now };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
-            var account = new Account() { CreateDate = DateTime.Now, UserId = user.Id };
-            db.Accounts.Add(account);
             await db.SaveChangesAsync();
 
             if (!result.Succeeded)

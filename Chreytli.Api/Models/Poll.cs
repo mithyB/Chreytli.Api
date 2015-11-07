@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace Chreytli.Api.Models
 {
@@ -15,9 +11,8 @@ namespace Chreytli.Api.Models
 
         public int TotalVotes { get; set; }
 
-        public virtual List<Choice> Choices { get; set; }
-
-        [NotMapped]
+        public virtual ICollection<Choice> Choices { get; set; }
+        
         public bool IsVoted { get; set; }
     }
 }
