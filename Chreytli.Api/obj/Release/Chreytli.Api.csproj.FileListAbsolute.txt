@@ -109,3 +109,9 @@ D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\bin\zh-Hans\System.Spatial.resour
 D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\bin\zh-Hant\System.Spatial.resources.dll
 D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\obj\Release\Chreytli.Api.Migrations.account.resources
 D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\obj\Release\Chreytli.Api.Migrations.Poll.resources
+D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\obj\Release\Chreytli.Api.Migrations.events.resources
+D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\bin\NReco.VideoConverter.dll
+D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\bin\NReco.VideoConverter.xml
+D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\obj\Release\Chreytli.Api.Migrations.submissions.resources
+D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\obj\Release\Chreytli.Api.Migrations.entities.resources
+D:\Dev\Visual Studio\Chreytli.Api\Chreytli.Api\obj\Release\Chreytli.Api.Migrations.tag.resources
