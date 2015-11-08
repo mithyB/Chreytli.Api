@@ -51,6 +51,8 @@ namespace Chreytli.Api.Controllers
                 return BadRequest();
             }
 
+            @event.Author = db.Users.Find(@event.Author.Id);
+            @event.Date = DateTime.Now;
             db.Entry(@event).State = EntityState.Modified;
 
             try
@@ -83,6 +85,8 @@ namespace Chreytli.Api.Controllers
             }
 
             @event.Id = Guid.NewGuid();
+            @event.Author = db.Users.Find(@event.Author.Id);
+            @event.Date = DateTime.Now;
 
             db.Events.Add(@event);
 

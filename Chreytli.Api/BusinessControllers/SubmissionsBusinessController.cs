@@ -15,19 +15,12 @@ namespace Chreytli.Api.BusinessControllers
         {
             var subs = submissions.Select(x =>
             {
-                //var author = users.Find(x.Author.Id);
-                //x.Author = new
-                //{
-                //    author.UserName,
-                //    author.Id
-                //};
-
                 x.IsFavorite = favorites.Any(f => f.User.Id == userId && f.Submission.Id == x.Id);
 
                 return x;
             }).AsQueryable();
 
-            return GetFilteredSubmissions(subs, filter).OrderByDescending(x => x.Date).Skip(pageSize * page).Take(pageSize);
+            return GetFilteredSubmissions(subs.OrderByDescending(x => x.Date), filter).Skip(pageSize * page).Take(pageSize);
         }
 
         public void GetThumbnail(ref Submission submission, string mimeType)

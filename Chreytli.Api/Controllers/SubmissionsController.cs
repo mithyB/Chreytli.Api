@@ -21,7 +21,7 @@ namespace Chreytli.Api.Controllers
         // GET: api/Submissions
         public IQueryable<Submission> GetSubmissions([FromUri] string userId = null, [FromUri]int page = 0, [FromUri]string[] filter = null)
         {
-            const int pageSize = 24;
+            const int pageSize = 12;
 
             return controller.GetSubmissions(db.Submissions, db.Favorites, db.Users, userId, filter, pageSize, page);
         }
