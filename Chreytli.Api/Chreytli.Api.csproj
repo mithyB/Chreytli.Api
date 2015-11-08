@@ -251,6 +251,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MetaController.cs" />
     <Compile Include="Controllers\PollsController.cs" />
+    <Compile Include="Controllers\RiotApiController.cs" />
     <Compile Include="Controllers\SubmissionsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -354,6 +355,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\RiotApi\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
