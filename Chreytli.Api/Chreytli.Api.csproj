@@ -256,9 +256,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201511071237340_Beta.cs" />
-    <Compile Include="Migrations\201511071237340_Beta.Designer.cs">
-      <DependentUpon>201511071237340_Beta.cs</DependentUpon>
+    <Compile Include="Migrations\201511121819565_Initial.cs" />
+    <Compile Include="Migrations\201511121819565_Initial.Designer.cs">
+      <DependentUpon>201511121819565_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -313,6 +313,7 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <None Include="Properties\PublishProfiles\Chreytli Pre-Release.pubxml" />
     <None Include="Properties\PublishProfiles\Chreytli.pubxml" />
     <None Include="Properties\PublishProfiles\Server.pubxml">
       <SubType>Designer</SubType>
@@ -362,8 +363,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201511071237340_Beta.resx">
-      <DependentUpon>201511071237340_Beta.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201511121819565_Initial.resx">
+      <DependentUpon>201511121819565_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

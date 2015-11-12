@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Chreytli.Api.Models

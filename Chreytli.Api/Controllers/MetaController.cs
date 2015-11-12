@@ -13,13 +13,14 @@ namespace Chreytli.Api.Controllers
         [Route("api/Meta/TopScore")]
         public IHttpActionResult GetTopScore()
         {
-            var users = db.Users.Select(x => new { x.Id, x.UserName }).ToArray();
-
-            var result = (from u in users
-                          join p in db.Submissions on u.Id equals p.Author.Id into j
-                          from s in j.DefaultIfEmpty()
-                          select new { u.Id, u.UserName, TotalScore = j.Sum(x => x.Score), PostsCount = j.Count(x => x.Author.Id == u.Id) })
-                .DistinctBy(x => x.Id).OrderByDescending(x => x.TotalScore).Where(x => x.TotalScore > 0).Take(10);
+            var result = db.Users.Select(x =>
+            new {
+                x.Id,
+                x.UserName,
+                TotalScore = db.Submissions.Where(y => y.Author.Id == x.Id).Select(y => y.Score).DefaultIfEmpty(0).Sum(),
+                PostsCount = db.Submissions.Count(y => y.Author.Id == x.Id)
+            })
+                .DistinctBy(x => x.Id).OrderByDescending(x => x.TotalScore).Where(x => x.TotalScore > 0).ToList().Take(10);
 
             return Ok(result);
         }

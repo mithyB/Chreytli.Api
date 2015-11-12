@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 
 namespace Chreytli.Api.Models
@@ -40,6 +41,15 @@ namespace Chreytli.Api.Models
         public string[] Roles { get; set; }
 
         public DateTime CreateDate { get; set; }
+    }
+
+    public class UserViewModel : IUser
+    {
+        public string Id { get; set; }
+
+        public string UserName { get; set; }
+
+        public string Email { get; set; }
     }
 
     public class UserLoginInfoViewModel

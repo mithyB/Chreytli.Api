@@ -11,16 +11,14 @@ namespace Chreytli.Api.BusinessControllers
 {
     public class SubmissionsBusinessController
     {
-        public IQueryable<Submission> GetSubmissions(IEnumerable<Submission> submissions, IDbSet<Favorite> favorites, IDbSet<ApplicationUser> users, string userId, string[] filter, int pageSize, int page)
+        public IQueryable<Submission> GetSubmissions(IDbSet<Submission> submissions, IDbSet<Favorite> favorites, IDbSet<ApplicationUser> users, string userId, string[] filter, int pageSize, int page)
         {
-            var subs = submissions.Select(x =>
+            submissions.Include(x => x.Author).ToList().ForEach(x =>
             {
                 x.IsFavorite = favorites.Any(f => f.User.Id == userId && f.Submission.Id == x.Id);
+            });
 
-                return x;
-            }).AsQueryable();
-
-            return GetFilteredSubmissions(subs.OrderByDescending(x => x.Date), filter).Skip(pageSize * page).Take(pageSize);
+            return GetFilteredSubmissions(submissions.OrderByDescending(x => x.Date).ToList(), filter).Skip(pageSize * page).Take(pageSize).AsQueryable();
         }
 
         public void GetThumbnail(ref Submission submission, string mimeType)
@@ -82,14 +80,14 @@ namespace Chreytli.Api.BusinessControllers
             }
         }
 
-        internal IQueryable<Submission> GetFilteredSubmissions(IQueryable<Submission> submissions, string[] filter)
+        internal ICollection<Submission> GetFilteredSubmissions(ICollection<Submission> submissions, string[] filter)
         {
             if (filter == null || filter.Length == 0)
             {
                 filter = new [] { "sfw" };
             }
 
-            return submissions.Where(x => filter.Any(f => f.ToLower() == x.Tag.ToString().ToLower()));
+            return submissions.Where(x => filter.Any(f => f.ToLower() == x.Tag.ToString().ToLower())).ToList();
         }
 
         public void RemoveImages(Submission submission)

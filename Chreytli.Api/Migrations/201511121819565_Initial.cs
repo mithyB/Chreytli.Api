@@ -3,7 +3,7 @@ namespace Chreytli.Api.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Beta : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -99,12 +99,12 @@ namespace Chreytli.Api.Migrations
                 c => new
                     {
                         Id = c.Guid(nullable: false),
+                        Date = c.DateTime(nullable: false),
                         Title = c.String(),
                         Description = c.String(),
                         AllDay = c.Boolean(nullable: false),
                         Start = c.DateTime(nullable: false),
                         End = c.DateTime(nullable: false),
-                        Date = c.DateTime(nullable: false),
                         Author_Id = c.String(nullable: false, maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)

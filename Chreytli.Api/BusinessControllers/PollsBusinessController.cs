@@ -13,7 +13,7 @@ namespace Chreytli.Api.BusinessControllers
             return polls.Include(x => x.Choices)
                 .OrderByDescending(x => x.Date)
                 .Skip(pageSize * page).Take(pageSize)
-                .AsEnumerable()
+                .ToList()
                 .Select(x =>
             {
                 x.IsVoted = votes.Any(y => y.User.Id == userId && y.Poll.Id == x.Id);

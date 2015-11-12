@@ -3,9 +3,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Chreytli.Api.Models
 {
-    public class Event : AuthorEntity
+    public class Event
     {
-        new public Guid Id { get; set; }
+        public Guid Id { get; set; }
+
+        public virtual ApplicationUser Author { get; set; }
+
+        public DateTime Date { get; set; }
 
         public string Title { get; set; }
 
