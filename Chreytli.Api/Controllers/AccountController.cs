@@ -125,6 +125,24 @@ namespace Chreytli.Api.Controllers
             };
         }
 
+        // POST api/Account/ChangeEmail
+        [Route("ChangeEmail")]
+        public async Task<IHttpActionResult> ChangeEmail(string newEmail)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var userId = User.Identity.GetUserId();
+            var user = await UserManager.FindByIdAsync(userId);
+            user.Email = newEmail;
+
+            await UserManager.UpdateAsync(user);
+
+            return Ok();
+        }
+
         // POST api/Account/ChangePassword
         [Route("ChangePassword")]
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
