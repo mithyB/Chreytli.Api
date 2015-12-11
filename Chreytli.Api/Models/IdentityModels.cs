@@ -5,6 +5,8 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity;
 using System;
 using System.Runtime.Serialization;
+using System.Configuration;
+using System.Linq;
 
 namespace Chreytli.Api.Models
 {
@@ -27,11 +29,38 @@ namespace Chreytli.Api.Models
         }
     }
 
-    public partial class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
             : base("DataContext", throwIfV1Schema: false)
         {
+        }
+
+        public static ApplicationDbContext Create()
+        {
+            var context = new ApplicationDbContext();
+
+            var userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(context));
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+
+            var user = new ApplicationUser
+            {
+                Email = ConfigurationManager.AppSettings["AdminEmail"],
+                UserName = ConfigurationManager.AppSettings["AdminUsername"],
+                CreateDate = DateTime.Now
+            };
+
+            userManager.Create(user, ConfigurationManager.AppSettings["AdminPassword"]);
+            roleManager.Create(new IdentityRole("Admins"));
+
+            var admin = userManager.Users.FirstOrDefault(x => x.UserName == user.UserName);
+
+            if (admin != null)
+            {
+                userManager.AddToRole(admin.Id, "Admins");
+            }
+
+            return context;
         }
 
         public DbSet<Submission> Submissions { get; set; }

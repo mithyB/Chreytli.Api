@@ -269,7 +269,6 @@
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\Favorite.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\IdentityModelsAdminSeed_DoNotCommitThisFile.cs" />
     <Compile Include="Models\Poll.cs" />
     <Compile Include="Models\Submission.cs" />
     <Compile Include="Models\Vote.cs" />
@@ -313,6 +312,7 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="appsettings.config" />
     <None Include="Properties\PublishProfiles\Chreytli Pre-Release.pubxml" />
     <None Include="Properties\PublishProfiles\Chreytli.pubxml" />
     <None Include="Properties\PublishProfiles\Server.pubxml">
