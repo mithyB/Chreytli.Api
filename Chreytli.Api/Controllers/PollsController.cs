@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Chreytli.Api.Models;
 using Chreytli.Api.BusinessControllers;
+using Microsoft.AspNet.Identity;
 
 namespace Chreytli.Api.Controllers
 {
@@ -82,7 +83,7 @@ namespace Chreytli.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            poll.Author = db.Users.Find(poll.Author.Id);
+            poll.Author = db.Users.Find(User.Identity.GetUserId());
             db.Polls.Add(poll);
             await db.SaveChangesAsync();
 
@@ -98,6 +99,19 @@ namespace Chreytli.Api.Controllers
             {
                 return NotFound();
             }
+
+            if (poll.Author.Id != User.Identity.GetUserId() &&
+                !User.IsInRole("Admins"))
+            {
+                return Unauthorized();
+            }
+
+            await db.Votes.Where(x => x.Poll.Id == poll.Id).ForEachAsync(x =>
+            {
+                db.VoteChoices.Where(y => y.VoteId == x.Id).ForEachAsync(y => db.VoteChoices.Remove(y));
+                db.Votes.Remove(x);
+            });
+            await db.Choices.Where(x => x.Poll.Id == poll.Id).ForEachAsync(x => db.Choices.Remove(x));
 
             db.Polls.Remove(poll);
             await db.SaveChangesAsync();

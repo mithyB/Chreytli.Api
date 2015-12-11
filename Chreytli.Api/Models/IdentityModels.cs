@@ -9,8 +9,13 @@ using System.Runtime.Serialization;
 namespace Chreytli.Api.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
+    [DataContract]
     public class ApplicationUser : IdentityUser
     {
+        [DataMember]
+        public override string UserName { get { return base.UserName; } set { base.UserName = value; } }
+
+        [DataMember]
         public DateTime CreateDate { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)

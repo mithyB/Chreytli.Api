@@ -9,6 +9,7 @@ using System.Web.Http.Description;
 using Chreytli.Api.Models;
 using Chreytli.Api.BusinessControllers;
 using System.Collections.Generic;
+using Microsoft.AspNet.Identity;
 
 namespace Chreytli.Api.Controllers
 {
@@ -86,7 +87,7 @@ namespace Chreytli.Api.Controllers
             }
 
             @event.Id = Guid.NewGuid();
-            @event.Author = db.Users.Find(@event.Author.Id);
+            @event.Author = db.Users.Find(User.Identity.GetUserId());
             @event.Date = DateTime.Now;
 
             db.Events.Add(@event);
@@ -119,6 +120,12 @@ namespace Chreytli.Api.Controllers
             if (@event == null)
             {
                 return NotFound();
+            }
+
+            if (@event.Author.Id != User.Identity.GetUserId() &&
+                !User.IsInRole("Admins"))
+            {
+                return Unauthorized();
             }
 
             db.Events.Remove(@event);

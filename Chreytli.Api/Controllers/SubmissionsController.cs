@@ -106,7 +106,8 @@ namespace Chreytli.Api.Controllers
             }
 
             controller.GetThumbnail(ref submission, contentType);
-            submission.Author = db.Users.Find(submission.Author.Id);
+            var userId = User.Identity.GetUserId();
+            submission.Author = db.Users.Find(userId);
 
             db.Submissions.Add(submission);
             await db.SaveChangesAsync();
