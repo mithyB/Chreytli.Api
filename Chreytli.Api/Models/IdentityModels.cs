@@ -15,6 +15,9 @@ namespace Chreytli.Api.Models
     public class ApplicationUser : IdentityUser
     {
         [DataMember]
+        public override string Id { get { return base.Id; } set { base.Id = value; } }
+
+        [DataMember]
         public override string UserName { get { return base.UserName; } set { base.UserName = value; } }
 
         [DataMember]
