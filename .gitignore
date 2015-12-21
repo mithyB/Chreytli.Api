@@ -13,3 +13,4 @@ appsettings.config
 
 *.suo
 .vs
+/UpgradeLog.htm
