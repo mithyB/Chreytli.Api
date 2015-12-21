@@ -9,5 +9,7 @@ Chreytli.Api/obj/
 Chreytli.Api/images/
 Chreytli.Api/Properties/PublishProfiles
 
+appsettings.config
+
 *.suo
 .vs
