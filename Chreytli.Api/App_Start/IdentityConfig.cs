@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Chreytli.Api.Models;
+using Chreytli.Api.Services;
 
 namespace Chreytli.Api
 {
@@ -33,6 +34,7 @@ namespace Chreytli.Api
                 RequireLowercase = false,
                 RequireUppercase = false,
             };
+            manager.EmailService = new EmailService();
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {

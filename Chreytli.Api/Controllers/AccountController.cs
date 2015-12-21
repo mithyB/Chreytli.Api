@@ -125,7 +125,7 @@ namespace Chreytli.Api.Controllers
             };
         }
 
-        // POST api/Account/ChangeEmail
+        // POST api/Account/ChangeEmail <--
         [Route("ChangeEmail")]
         public async Task<IHttpActionResult> ChangeEmail(string newEmail)
         {
@@ -134,11 +134,8 @@ namespace Chreytli.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var userId = User.Identity.GetUserId();
-            var user = await UserManager.FindByIdAsync(userId);
-            user.Email = newEmail;
-
-            await UserManager.UpdateAsync(user);
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            await SendConfirmationEmailAsync(user);
 
             return Ok();
         }
@@ -362,6 +359,9 @@ namespace Chreytli.Api.Controllers
             }
 
             var user = new ApplicationUser() { UserName = model.Username, Email = model.Email, CreateDate = DateTime.Now };
+            
+            //var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            //var callbackUrl = "localhost:1337/#/account_verification";
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
@@ -372,6 +372,25 @@ namespace Chreytli.Api.Controllers
                 return GetErrorResult(result);
             }
 
+            //await UserManager.SendEmailAsync(user.Id,
+            //   "Confirm your account",
+            //   $"Hello {user.UserName}, <br>" +
+            //   $"Please confirm your account by clicking <a href=\"{callbackUrl}\">this link</a>.");
+
+            await SendConfirmationEmailAsync(user.Id, user.UserName);
+
+            return Ok();
+        }
+
+        // GET: /Account/ConfirmEmail
+        [AllowAnonymous]
+        public async Task<IHttpActionResult> ConfirmEmail(string userId, string code)
+        {
+            if (userId == null || code == null)
+            {
+                return BadRequest();
+            }
+            var result = await UserManager.ConfirmEmailAsync(userId, code);
             return Ok();
         }
 
@@ -453,6 +472,21 @@ namespace Chreytli.Api.Controllers
             }
 
             return null;
+        }
+
+        private async Task SendConfirmationEmailAsync(ApplicationUser user)
+        {
+            user.EmailConfirmed = false;
+
+            var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            var callbackUrl = "chreyt.li/#/account_verification";
+
+            await UserManager.SendEmailAsync(user.Id,
+               "Confirm your account",
+               $"Hello {user.UserName}, <br>" +
+               $"Please confirm your account by clicking <a href=\"{callbackUrl}\">this link</a>.");
+
+            await UserManager.UpdateAsync(user);
         }
 
         private class ExternalLoginData
